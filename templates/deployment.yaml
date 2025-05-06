@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nodejs-server.fullname" . }}
+  namespace: {{ .Values.namespace | default .Release.Namespace }}
+  labels:
+    {{- include "nodejs-server.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "nodejs-server.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "nodejs-server.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name | quote }}
+          {{- with .Values.image }}
+          image: "{{ .name }}:{{ .tag }}"
+          imagePullPolicy: "{{ .imagePullPolicy }}"
+          {{- end }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort | default .Values.service.port }}
+              name: http
+          envFrom:
+            - secretRef:
+                name: {{ include "nodejs-server.secretName" . }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}

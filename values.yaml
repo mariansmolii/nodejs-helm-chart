@@ -1,0 +1,64 @@
+# Default values for nodejs-server.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This will override the name of the chart
+nameOverride: ""
+
+# This will override the full name of the chart
+fullnameOverride: "my-nodejs-server"
+
+# This will set the replica count for the deployment
+replicaCount: 1
+
+# This will set the namespace for all resources
+namespace: ""
+
+# This will set the image for the deployment
+image:
+  name: "mariansmolii/devlinks-server"
+  tag: "b38e6b60f0ca7e69c9200e918711db73ee515764-115"
+  imagePullPolicy: IfNotPresent
+
+# This will set secrets for server deployment
+# Use this to set the secrets for the deployment or to use an existing secret
+secrets:
+  enabled: true
+  data:
+    port: ""
+    db_host: ""
+    jwt_secret: ""
+    cloudinary_folder_name: ""
+    cloudinary_api_key: ""
+    cloudinary_api_secret: ""
+    cloudinary_cloud_name: ""
+
+  # Existing secret with values (keys: PORT, DB_HOST, JWT_SECRET, CLOUDINARY_FOLDER_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_CLOUD_NAME)
+  existingSecret: ""
+
+# This is for setting up a service
+service:
+  # This will enable or disable the service
+  enabled: true
+  # This will set the type of the service
+  type: ClusterIP
+  # This will set the port of the service
+  port: 1111
+  # This will set the target port of the service
+  # If empty, it will default to the same value as port
+  targetPort: ""
+  # This will set the node port of the service if the type is NodePort
+  nodePort: ""
+
+# This will set the resource requests and limits for the deployment
+resources:
+  requests:
+    cpu: 10m
+    memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 256Mi
+
+# This will set the node selector for the deployment
+nodeSelector:
+  app: server
