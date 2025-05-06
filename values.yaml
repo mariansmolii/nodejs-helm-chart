@@ -38,14 +38,14 @@ service:
   # This will enable or disable the service
   enabled: true
   # This will set the type of the service
-  type: NodePort
+  type: ClusterIP
   # This will set the port of the service
   port: 1111
   # This will set the target port of the service
   # If empty, it will default to the same value as port
   targetPort: ""
   # This will set the node port of the service if the type is NodePort
-  nodePort: 30005
+  nodePort: ""
 
 # This will set the resource requests and limits for the deployment
 resources:
@@ -76,3 +76,16 @@ mongodb:
     storageClass: "standard"
     size: 5Gi
   nodeSelector: {}
+
+  # This will set the ingress for the deployment
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  ingressClassName: nginx
+  tls: []
+  hosts:
+    - host: nodejs-server.local
+      paths:
+        - path: /
+          pathType: Prefix
