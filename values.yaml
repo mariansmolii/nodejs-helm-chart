@@ -11,9 +11,6 @@ fullnameOverride: "my-nodejs-server"
 # This will set the replica count for the deployment
 replicaCount: 1
 
-# This will set the namespace for all resources
-namespace: ""
-
 # This will set the image for the deployment
 image:
   name: "mariansmolii/devlinks-server"
@@ -23,7 +20,7 @@ image:
 # This will set secrets for server deployment
 # Use this to set the secrets for the deployment or to use an existing secret
 secrets:
-  enabled: true
+  enabled: false
   data:
     port: ""
     db_host: ""
@@ -34,21 +31,21 @@ secrets:
     cloudinary_cloud_name: ""
 
   # Existing secret with values (keys: PORT, DB_HOST, JWT_SECRET, CLOUDINARY_FOLDER_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_CLOUD_NAME)
-  existingSecret: ""
+  existingSecret: "server-secrets"
 
 # This is for setting up a service
 service:
   # This will enable or disable the service
   enabled: true
   # This will set the type of the service
-  type: ClusterIP
+  type: NodePort
   # This will set the port of the service
   port: 1111
   # This will set the target port of the service
   # If empty, it will default to the same value as port
   targetPort: ""
   # This will set the node port of the service if the type is NodePort
-  nodePort: ""
+  nodePort: 30005
 
 # This will set the resource requests and limits for the deployment
 resources:
