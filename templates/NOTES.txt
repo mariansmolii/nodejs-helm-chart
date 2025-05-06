@@ -24,4 +24,29 @@
    TargetPort: {{ .Values.service.targetPort | default .Values.service.port }}
 {{- else }}
 ℹ️ Ingress is disabled. You can enable it in `values.yaml` under `.ingress.enabled: true`
+
+1. 🚀 Your Node.js server has been successfully deployed!
+
+2. 🔗 Since Ingress is disabled, you can access the service using:
+   - NodePort or LoadBalancer IP (depending on `.service.type`)
+   - Port: {{ .Values.service.port }}
+
+3. 📦 Chart name override:
+   {{ .Values.fullnameOverride | default .Release.Name }}
+
+4. 🔐 Secrets:
+   {{- if .Values.secrets.enabled }}
+   Using custom secret from `.Values.secrets.data`
+   {{- else }}
+   Using existing secret: {{ .Values.secrets.existingSecret }}
+   {{- end }}
+
+5. 🧩 MongoDB:
+   MongoDB is {{ if .Values.mongodb.enabled }}enabled{{ else }}disabled{{ end }} with replica set: `{{ .Values.mongodb.architecture }}`
+   MongoDB secret used: {{ .Values.mongodb.auth.existingSecret }}
+
+6. 📡 Service:
+   Type: {{ .Values.service.type }}
+   Port: {{ .Values.service.port }}
+   TargetPort: {{ .Values.service.targetPort | default .Values.service.port }}
 {{- end }}
