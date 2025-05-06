@@ -57,5 +57,22 @@ resources:
     memory: 256Mi
 
 # This will set the node selector for the deployment
-nodeSelector:
-  app: server
+nodeSelector: {}
+
+# Mongodb values from bitnami chart https://artifacthub.io/packages/helm/bitnami/mongodb?modal=values
+mongodb:
+  enabled: true
+  fullnameOverride: "mongodb"
+  architecture: replicaset
+  auth:
+    enabled: true
+    rootUser: root
+    usernames: [myuser]
+    databases: [devlinks]
+    existingSecret: "mongodb-secrets"
+  replicaCount: 1
+  persistence:
+    enabled: true
+    storageClass: "standard"
+    size: 5Gi
+  nodeSelector: {}
