@@ -1,0 +1,16 @@
+{{- if not (or (and .Values.secrets.enabled .Values.secrets.data) .Values.secrets.existingSecret) }}
+{{- fail "You must either enable secrets with data or provide secrets.existingSecret." }}
+{{- end }}
+
+
+{{- if and .Values.secrets.enabled .Values.secrets.data .Values.secrets.existingSecret }}
+{{- fail "You must set either secrets.data or secrets.existingSecret, not both." }}
+{{- end }}
+
+{{- if and .Values.secrets.enabled .Values.secrets.data }}
+{{- range $key, $value := .Values.secrets.data }}
+{{- if $value | empty }}
+{{- fail (printf "You must set a value for %s in secrets.data" $key) }}
+{{- end }}
+{{- end }}
+{{- end }}
