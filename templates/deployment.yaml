@@ -22,7 +22,6 @@ spec:
           {{- end }}
           ports:
             - containerPort: {{ .Values.service.targetPort | default .Values.service.port }}
-              name: http
           envFrom:
             - secretRef:
                 name: {{ include "nodejs-server.secretName" . }}
