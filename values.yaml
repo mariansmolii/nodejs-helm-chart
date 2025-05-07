@@ -20,7 +20,9 @@ image:
 # This will set secrets for server deployment
 # Use this to set the secrets for the deployment or to use an existing secret
 secrets:
-  enabled: false
+  enabled: false # If true, a new Kubernetes Secret will be created using the values under `data`
+
+  # These values will be used only when `enabled` is true
   data:
     port: ""
     db_host: ""
@@ -30,7 +32,8 @@ secrets:
     cloudinary_api_secret: ""
     cloudinary_cloud_name: ""
 
-  # Existing secret with values (keys: PORT, DB_HOST, JWT_SECRET, CLOUDINARY_FOLDER_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_CLOUD_NAME)
+  # If `enabled` is false, use this existing Kubernetes Secret
+  # It must contain the keys: PORT, DB_HOST, JWT_SECRET, CLOUDINARY_FOLDER_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_CLOUD_NAME
   existingSecret: "server-secrets"
 
 # This is for setting up a service
@@ -77,7 +80,7 @@ mongodb:
     size: 5Gi
   nodeSelector: {}
 
-  # This will set the ingress for the deployment
+# This will set the ingress for the deployment
 ingress:
   enabled: true
   annotations:
