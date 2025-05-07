@@ -4,15 +4,18 @@ metadata:
   name: {{ include "nodejs-server.fullname" . }}
   labels:
     {{- include "nodejs-server.labels" . | nindent 4 }}
+    {{- toYaml .Values.additionalLabels | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "nodejs-server.selectorLabels" . | nindent 6 }}
+      {{- toYaml .Values.additionalLabels | nindent 6 }}
   template:
     metadata:
       labels:
         {{- include "nodejs-server.labels" . | nindent 8 }}
+        {{- toYaml .Values.additionalLabels | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name | quote }}

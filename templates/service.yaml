@@ -8,6 +8,7 @@ metadata:
 spec:
   selector:
     {{- include "nodejs-server.selectorLabels" . | nindent 4 }}
+    {{- toYaml .Values.additionalLabels | nindent 4 }}
   {{- with .Values.service }}
   type: {{ .type | default "ClusterIP" }}
   ports:

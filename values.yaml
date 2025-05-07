@@ -59,6 +59,11 @@ resources:
     cpu: 100m
     memory: 256Mi
 
+# This will set additional labels for the deployment
+additionalLabels:
+  app: "nodejs-server"
+  component: "server"
+
 # This will set the node selector for the deployment
 nodeSelector: {}
 
