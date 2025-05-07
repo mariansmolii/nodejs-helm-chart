@@ -31,8 +31,8 @@ You can configure the deployment by editing the `values.yaml` file or by using t
 ```bash
 helm install my-nodejs-server . \
   --set image.tag="latest" \
-  --set secrets.enabled=true \
   --set secrets.existingSecret="my-secret" \
+  --set service.type=NodePort \
   --set service.port=3000
 ```
 
